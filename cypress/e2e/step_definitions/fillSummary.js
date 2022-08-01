@@ -4,13 +4,12 @@ const { Given, And, When, Then } = require("@badeball/cypress-cucumber-preproces
 const firstName = faker.name.firstName();
 const lastName = faker.name.lastName();
 const email = faker.internet.email();
-const time = new Date();
-const date = time.getFullYear() + '-' + 0 + (time.getMonth() + 1) + '-' + time.getDate();
+const datePick = new Date().toISOString().slice(0, 10);
 
 Given(/^I’m in the detail’s screen$/, () => {
   cy.visit('/');
-  cy.get('#pickup').type(date);
-  cy.get('#dropoff').type(date);
+  cy.get('#pickup').type(datePick);
+  cy.get('#dropoff').type(datePick);
   cy.get('.btn').click();
   cy.get(':nth-child(1) > :nth-child(7) > .btn').click();
 });
@@ -37,7 +36,7 @@ When(/^I click in the second ‘Rent’ button$/, () => {
 });
 
 Then(/^should show a success screen$/, () => {
-  return true
+  cy.contains('Success Rent!').should('exist');
 });
 
 
